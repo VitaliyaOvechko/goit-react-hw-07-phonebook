@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import { ItemText } from './ContactsListItem.styled';
 
-export const ContactItem = ({ contact: { name, number } }) => {
+export const ContactItem = ({ contact: { name, phone } }) => {
   return (
     <ItemText>
-      {name}: {number}
+      {name}: {phone}
     </ItemText>
   );
 };
@@ -12,6 +12,6 @@ export const ContactItem = ({ contact: { name, number } }) => {
 ContactItem.propTypes = {
   contact: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
   }).isRequired,
 };
