@@ -34,28 +34,6 @@ const contactsSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.items.push(action.payload);
-
-      // alert(`${action.payload.name} is already in contacts`);
-      // addContact: {
-      // reducer(state, action) {
-      //   const newContact = state.find(
-      //     contact =>
-      //       action.payload.name.toLowerCase() === contact.name.toLowerCase()
-      //   );
-
-      //   return newContact
-      //     ? alert(`${action.payload.name} is already in contacts`)
-      //     : [...state, action.payload];
-      // },
-      // prepare({ name, number }) {
-      //   return {
-      //     payload: {
-      //       id: nanoid(),
-      //       name,
-      //       number,
-      //     },
-      //   };
-      // },
     },
     [addContact.rejected]: handleRejected,
 
