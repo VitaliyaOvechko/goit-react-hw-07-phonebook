@@ -15,7 +15,7 @@ const handleRejected = (state, action) => {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: {
-    contacts: [],
+    items: [],
     isLoading: false,
     error: null,
   },
@@ -23,10 +23,9 @@ const contactsSlice = createSlice({
   extraReducers: {
     [fetchContacts.pending]: handlePening,
     [fetchContacts.fulfilled](state, action) {
-      console.log(action.payload);
       state.isLoading = false;
       state.error = null;
-      state.contacts = action.payload;
+      state.items = action.payload;
     },
     [fetchContacts.rejected]: handleRejected,
 
@@ -34,7 +33,29 @@ const contactsSlice = createSlice({
     [addContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
-      state.contacts.push(action.payload);
+      state.items.push(action.payload);
+
+      // alert(`${action.payload.name} is already in contacts`);
+      // addContact: {
+      // reducer(state, action) {
+      //   const newContact = state.find(
+      //     contact =>
+      //       action.payload.name.toLowerCase() === contact.name.toLowerCase()
+      //   );
+
+      //   return newContact
+      //     ? alert(`${action.payload.name} is already in contacts`)
+      //     : [...state, action.payload];
+      // },
+      // prepare({ name, number }) {
+      //   return {
+      //     payload: {
+      //       id: nanoid(),
+      //       name,
+      //       number,
+      //     },
+      //   };
+      // },
     },
     [addContact.rejected]: handleRejected,
 
@@ -42,48 +63,12 @@ const contactsSlice = createSlice({
     [deleteContact.fulfilled](state, action) {
       state.isLoading = false;
       state.error = null;
-      state.contacts.filter(contact => contact.id !== action.payload.id);
-
-      // const index = state.contacts.findIndex(
-      //   contact => contact.id === action.payload.id
-      // );
-      // state.contacts.splice(index, 1);
+      state.items = state.items.filter(
+        contact => contact.id !== action.payload.id
+      );
     },
     [deleteContact.rejected]: handleRejected,
   },
-
-  //// попередній варіает з ДЗ 6
-
-  // addContact: {
-  //   reducer(state, action) {
-  //     const newContact = state.find(
-  //       contact =>
-  //         action.payload.name.toLowerCase() === contact.name.toLowerCase()
-  //     );
-
-  //     return newContact
-  //       ? alert(`${action.payload.name} is already in contacts`)
-  //       : [...state, action.payload];
-  //   },
-  //   prepare({ name, number }) {
-  //     return {
-  //       payload: {
-  //         id: nanoid(),
-  //         name,
-  //         number,
-  //       },
-  //     };
-  //   },
-  // },
-  // deleteContact(state, action) {
-  //   return state.filter(contact => contact.id !== action.payload);
-  // },
-  // },
 });
-
-// export const { addContact, deleteContact } = contactsSlice.actions;
-
-// export const { fetchingInProgress, fetchingSuccess, fetchingError } =
-//   contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;
